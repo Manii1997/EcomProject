@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { admin_login } from "../../store/Reducers/authReducer";
+import { PropagateLoader } from "react-spinners";
 
 const AdminLogin = () => {
   const dispatch = useDispatch();
+  const { loader } = useSelector((state) => state.auth);
 
   const [state, setState] = useState({
     email: "",
@@ -45,6 +46,7 @@ const AdminLogin = () => {
                   placeholder="Email"
                   value={state.email}
                   onChange={inputHandle}
+                  required
                 />
 
                 <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
@@ -64,6 +66,7 @@ const AdminLogin = () => {
                   placeholder="Password"
                   value={state.password}
                   onChange={inputHandle}
+                  required
                 />
 
                 <span className="pointer-events-none absolute start-2.5 top-0 -translate-y-1/2 bg-white p-0.5 text-xs text-gray-700 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
@@ -72,14 +75,17 @@ const AdminLogin = () => {
               </label>
 
               <button
-                type="submit"
+                disabled={loader}
                 className="group relative inline-block overflow-hidden rounded-md border border-primary px-8 py-3 focus:outline-none focus:ring"
-                href="#"
               >
                 <span className="absolute inset-y-0 left-0 w-[2px] bg-primary transition-all duration-500 ease-in-out group-hover:w-full group-active:bg-primary"></span>
 
                 <span className="relative text-sm font-medium text-primary transition-colors group-hover:text-white">
-                  Sign In
+                  {loader ? (
+                    <PropagateLoader color="#ffffff" size={10} />
+                  ) : (
+                    "Login"
+                  )}
                 </span>
               </button>
             </div>
